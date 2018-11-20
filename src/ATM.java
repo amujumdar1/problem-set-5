@@ -23,7 +23,7 @@ public class ATM {
 	}
 	
 	public static void main(String[] args) {
-		ATM atm = new ATM(setCredentials());
+		ATM atm = new ATM();
 		System.out.println("Welcome to the ATM!");
 		
 		boolean rightAccount = false;
@@ -57,13 +57,13 @@ public class ATM {
 		
 	}
 	
-	public static BankAccount setCredentials(){
+	/*public static BankAccount setCredentials(){
 		User account = new User(34723283,
-				"Johnny Appleseed", "345-765-4967", "1776 Raritan Road");
+				"Johnny", "Appleseed", "2-11-2011", 3457654967, "1776 Raritan Road", "");
 		// constructor to set personal information of user
 		
-		return new BankAccount(1000, 713352114, 2428, account);
-	}
+		return new BankAccount(1000, 713352114, account);
+	}*/
 	
 	private void showMenu() {
 		

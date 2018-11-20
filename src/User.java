@@ -10,47 +10,94 @@
  */
 
 public class User {
-	private int SSN;
-	private String Name;
-	private String Phone;
-	private String Address;
+	private int pin;
+	private String firstName;
+	private String lastName;
+	private String birthDate;
+	private long Phone;
+	private String streetAddress;
+	private String city;
+	private String state;
+	private int postalCode;
 	
-	public User (int SSN, String Name, String Phone, String Address) {
-		this.SSN = SSN;
-		this.Name = Name;
+	public User (int pin, String firstName, String lastName, long Phone, String streetAddress,
+			String birthDate, String city, String state, int postalCode) {
+		this.pin = pin;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.birthDate = birthDate;
 		this.Phone = Phone;
-		this.Address = Address;
+		this.streetAddress = streetAddress;
+		this.city = city;
+		this.state = state;
+		this.postalCode = postalCode;
 	}
 	
-	public int getSSN() {
-		return SSN;
+	public int getPin() {
+		return pin;
 	}
 	
-	public void setSSN(int SSN) {
-		this.SSN = SSN; 
+	public void setPin(int pin) {
+		this.pin = pin; 
 	}
 	
-	public String getName() {
-		return Name;
+	public String getFirstName() {
+		return firstName;
 	}
 	
-	public void setName(String Name) {
-		this.Name = Name;
+	public void setFirstName(String lastName) {
+		this.firstName = lastName;
 	}
 	
-	public String getPhone() {
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String getBirthDate() {
+		return birthDate;
+	}
+	
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+	
+	public long getPhone() {
 		return Phone;
 	}
 	
-	public void setPhone(String Phone) {
+	public void setPhone(long Phone) {
 		this.Phone = Phone;
 	}
 	
-	public String getAddress() {
-		return Address;
+	public String getStreetAddress() {
+		return streetAddress;
 	}
 	
-	public void setAddress(String Address) {
-		this.Address = Address;
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+	
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public int getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(int postalCode) {
+		this.postalCode = postalCode;
 	}
 }

@@ -9,16 +9,14 @@
  */
 
 public class BankAccount {
-	double balance;
 	private long accountNumber;
-	private int pin;
 	User account;
+	double balance;
 	
-	public BankAccount(double balance, long accountNumber, int pin, User account) {
-		this.balance = balance;
+	public BankAccount( long accountNumber, User account, double balance) {
 		this.accountNumber = accountNumber;
-		this.pin = pin;
 		this.account = account;
+		this.balance = balance;
 	}
 	
 	public void deposit (double amount) {
@@ -30,7 +28,7 @@ public class BankAccount {
 	}
 	
 	public void withdraw (double amount) {
-		if (amount > balance) {
+		if (amount > balance || amount < 1) {
 			System.out.println("Invalid amount!");
 			return;		
 		}
@@ -45,11 +43,4 @@ public class BankAccount {
 		this.accountNumber = accountNumber;
 	}
 	
-	public int getPin() {
-		return pin;
-	}
-	
-	public void setPin(int pin) {
-		this.pin = pin;
-	}
 }
