@@ -10,39 +10,32 @@ import java.io.*;
 public class Database {
 	
 	private File file;
-	BufferedReader br;
 
-	
-	public Database(File file, BufferedReader br) {
+	public Database(File file) {
 		this.file = file;
-		this.br = br;
 	}
 	
-	public User setAccount() {
-		int pin;
-		String firstName;
-		String lastName;
-		String birthDate;
-		long Phone;
-		String streetAddress;
-		String city;
-		String state;
-		int postalCode;
+	public BankAccount retrieveAccount(long accountNumber, int pin) throws IOException {
+		BankAccount account = null;
 		
-		try (br = new BufferedReader(new FileReader(file))) {
-		String line;
+		 try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+			 String line;
+			 
+			 while ((line = br.readLine()) != null) {
+				 
+				 if (line.substring(0, 13).equals(accountNumber + "" + pin)) {
+					 // parse all values one by one
+					 // use parsed values to build and return BankAccount object
+					 
+//					account = new BankAccount(
+//						parsed values
+//					);
+				 }
+			 }
 		
-		while ((line = br.readLine()) != null) {
-			
-		}
-		catch (FileNotFoundException ex) {
-			
-		}
-		catch (IOException ex) {
-			
-		}
-		
-	}
+		 }
+		 
+		 return account;
 	}
 	/*try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 		String line;
