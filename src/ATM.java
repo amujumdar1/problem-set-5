@@ -13,8 +13,8 @@
 import java.util.Scanner;
 
 public class ATM {
-	private BankAccount bank;
-	
+	private static BankAccount bank;
+	private Database database;
 	static Scanner in = new Scanner(System.in);
 	// input variable
 	
@@ -23,7 +23,7 @@ public class ATM {
 	}
 	
 	public static void main(String[] args) {
-		ATM atm = new ATM();
+		ATM atm = new ATM(bank);
 		System.out.println("Welcome to the ATM!");
 		
 		boolean rightAccount = false;

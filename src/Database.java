@@ -15,27 +15,33 @@ public class Database {
 		this.file = file;
 	}
 	
-	public BankAccount retrieveAccount(long accountNumber, int pin) throws IOException {
-		BankAccount account = null;
-		
-		 try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+	void createAccount(BankAccount account) throws IOException {
+		try (BufferedWriter br = new BufferedWriter(new FileWriter(this.file))){
+			// TODO
+		}
+	}
+	
+	public BankAccount retrieveAccount(long accountNumber, int pin){
+		 try (BufferedReader br = new BufferedReader(new FileReader(this.file))) {
+			 
 			 String line;
 			 
 			 while ((line = br.readLine()) != null) {
 				 
+				 if (line.charAt(141) == 'N') return null;
+				 
 				 if (line.substring(0, 13).equals(accountNumber + "" + pin)) {
-					 // parse all values one by one
-					 // use parsed values to build and return BankAccount object
-					 
-//					account = new BankAccount(
-//						parsed values
+					 return new BankAccount(line);
 //					);
 				 }
 			 }
+			 return null;
 		
 		 }
-		 
-		 return account;
+		 catch (IOException e) {
+			 System.out.println("Could not read account from file.");
+			 return null;
+		 }
 	}
 	/*try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 		String line;
@@ -44,4 +50,9 @@ public class Database {
 			
 		}
 	}*/
+	
+	public BankAccount updateAccount() {
+		// TODO
+		return null;
+	}
 }

@@ -7,30 +7,58 @@
  * implemented last time. You can always reference my Github repository
  * for inspiration (https://github.com/rwilson-ucvts/java-sample-atm).
  */
+import java.security.*;
 
 public class BankAccount {
 	private long accountNumber;
 	User account;
+	char accountStatus;
 	double balance;
 	
-	public BankAccount( long accountNumber, User account, double balance) {
+	public BankAccount(long accountNumber, User account, double balance) {
 		this.accountNumber = accountNumber;
 		this.account = account;
 		this.balance = balance;
 	}
 	
+	public BankAccount(String text) {
+		int position = 0;
+		accountNumber = Long.parseLong(text.substring(position, position += 9));
+		
+		int pin = Integer.parseInt(text.substring(position, position += 4));
+		
+		balance = Integer.parseInt(text.substring(position, position += 15));
+		
+		String lastName = text.substring(position, position += 20);
+		position += 2;
+		
+		String firstName = text.substring(position, position += 10);
+		
+		String birthDate = text.substring(position, position += 8);
+		
+		long Phone = Long.parseLong(text.substring(position, position += 10));
+		
+		String streetAddress = text.substring(position, position += 30);
+		
+		String city = text.substring(position, position += 30);
+		
+		String state = text.substring(position, position += 2);
+		
+		int postalCode = Integer.parseInt(text.substring(position, position += 5));
+		
+		this.account = new User (pin, firstName, lastName, Phone, streetAddress, birthDate, city, state, postalCode);
+	}
+	
 	public void deposit (double amount) {
-		if (amount < 1) {
-			System.out.println("Invalid amount!");
-			return;
+		if (amount < 0) {
+			throw new InvalidParameterException("Deposit amount is too low.");
 		}
 		balance += amount;
 	}
 	
 	public void withdraw (double amount) {
 		if (amount > balance || amount < 1) {
-			System.out.println("Invalid amount!");
-			return;		
+			throw new InvalidParameterException("Invalid amount!");	
 		}
 		balance -= amount;
 	}
