@@ -1,3 +1,4 @@
+import java.util.Scanner;
 /**
  * Just like last time, the User class is responsible for retrieving
  * (i.e., getting), and updating (i.e., setting) user information.
@@ -31,6 +32,10 @@ public class User {
 		this.city = city;
 		this.state = state;
 		this.postalCode = postalCode;
+	}
+	
+	User (Scanner in) {
+		
 	}
 	
 	public int getPin() {

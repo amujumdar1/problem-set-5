@@ -15,14 +15,14 @@ public class Database {
 		this.file = file;
 	}
 	
-	void createAccount(BankAccount account) throws IOException {
+	/*void createAccount(BankAccount account) throws IOException {
 		try (BufferedWriter br = new BufferedWriter(new FileWriter(this.file))){
-			// TODO
+			// TODO 
 		}
-	}
+	}*/
 	
 	public BankAccount retrieveAccount(long accountNumber, int pin){
-		 try (BufferedReader br = new BufferedReader(new FileReader(this.file))) {
+		 try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			 
 			 String line;
 			 
@@ -39,6 +39,7 @@ public class Database {
 		
 		 }
 		 catch (IOException e) {
+			 
 			 System.out.println("Could not read account from file.");
 			 return null;
 		 }
@@ -53,6 +54,20 @@ public class Database {
 	
 	public BankAccount updateAccount() {
 		// TODO
+		
 		return null;
+	}
+	
+	
+	// delete method only disables it by adding 'N' at the end 
+	public void deleteAccount() {
+		try (BufferedReader br = new BufferedReader(new FileReader(file))){
+			
+		}
+		
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

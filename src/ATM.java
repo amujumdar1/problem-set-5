@@ -10,20 +10,25 @@
  * for inspiration (https://github.com/rwilson-ucvts/java-sample-atm).
  */
 
+import java.io.*;
 import java.util.Scanner;
 
 public class ATM {
-	private static BankAccount bank;
+	private static BankAccount account;
 	private Database database;
 	static Scanner in = new Scanner(System.in);
 	// input variable
 	
 	public ATM(BankAccount bank) {
-		this.bank = bank;
+		this.account = bank;
+	}
+	
+	ATM(File file){
+		this.database = database;
 	}
 	
 	public static void main(String[] args) {
-		ATM atm = new ATM(bank);
+		ATM atm = new ATM(account);
 		System.out.println("Welcome to the ATM!");
 		
 		boolean rightAccount = false;
@@ -43,6 +48,7 @@ public class ATM {
 		boolean rightPin = false; 
 		do {
 			System.out.print("PIN: ");
+			if (account.getPin())
 			
 			int pinInput = in.nextInt();
 			in.nextLine();
