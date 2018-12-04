@@ -12,6 +12,12 @@ public class Tester {
 	
 	public static void main(String[] args) {
 		
+		String x = "123434 ";
+		
+		long toString = Long.parseLong(x);
+		
+		System.out.println(toString);
+		
 		/*
 		 * Rather than hard coding one or more BankAccount objects, you'll need to read them in
 		 * from our very primitive database (i.e., a flat-file). After making changes, of course,

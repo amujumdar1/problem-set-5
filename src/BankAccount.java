@@ -21,8 +21,9 @@ public class BankAccount {
 		this.balance = balance;
 	}
 	
-	public BankAccount(String text) {
+	public BankAccount(String text) throws NumberFormatException {
 		int position = 0;
+		
 		accountNumber = Long.parseLong(text.substring(position, position += 9));
 		
 		int pin = Integer.parseInt(text.substring(position, position += 4));
