@@ -10,18 +10,34 @@ public class Tester {
 	 * @param args
 	 */
 	
-	public static void main(String[] args) {
-		
-		String x = "123434 ";
-		
-		long toString = Long.parseLong(x);
-		
-		System.out.println(toString);
+	public static void main(String[] args) throws NumberFormatException {
+		try {
+			printWeirdString();
+		}
+		catch (NumberFormatException e){
+			
+			System.out.println("Invalid!");
+		}
 		
 		/*
 		 * Rather than hard coding one or more BankAccount objects, you'll need to read them in
 		 * from our very primitive database (i.e., a flat-file). After making changes, of course,
 		 * you'll need to update the database accordingly.
 		 */
+	}
+
+
+	public static void printWeirdString() throws NumberFormatException {
+		String x = "a";
+		
+		char toChar = toChar(x);
+		
+		System.out.println(toChar);
+	}
+
+
+	private static char toChar(String x) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.lang.Math;
 /**
  * Just like last time, the User class is responsible for retrieving
  * (i.e., getting), and updating (i.e., setting) user information.
@@ -35,8 +36,78 @@ public class User {
 	}
 	
 	User (Scanner in) {
+		System.out.println("Please enter your information below.");
+			System.out.print("First name (first 15 characters): ");
+			this.firstName = in.nextLine().substring(0, 16);
+			System.out.print("Last name (first 15 characters): ");
+			this.lastName = in.nextLine().substring(0, 21);
+			do {
+				System.out.println("PIN (####): ");
+				try {
+					this.pin = in.nextInt();
+					in.nextLine();
+				}
+				catch (NumberFormatException e){
+					System.out.println("Invalid argument. Try again.");
+				}
+				
+				if ((int) Math.log10(this.pin) + 1 != 4){
+					System.out.println("Invalid argument. Try again.");
+				}
+			} while ((int) (Math.log10(this.pin) + 1) != 4);
+			
+			do {
+				System.out.print("Birth date (YYYYMMDD): ");
+				this.birthDate = in.nextLine();
+				if (this.birthDate.length() != 8) {
+					System.out.println("Invalid argument. Try again.");
+				}
+			} while (this.birthDate.length() != 8);
+			do {
+				System.out.println("Phone Number (##########): ");
+				try {
+					this.Phone = in.nextLong();
+					in.nextLine();
+				}
+				catch (NumberFormatException e){
+					System.out.println("Invalid argument. Try again.");
+				}
+				
+				if ((int) Math.log10(this.Phone) + 1 != 10){
+					System.out.println("Invalid argument. Try again.");
+				}
+			} while ((int) (Math.log10(this.Phone) + 1) != 10);
+			System.out.print("Street address (first 30 characters): ");
+			
+			this.streetAddress = this.firstName = in.nextLine().substring(0, 31);
+			
+			System.out.print("City (first 30 characters): ");
+			
+			this.city= in.nextLine().substring(0, 31);
+			
+			do {
+				System.out.print("State (two characters; e.g: XY): ");
+				this.state = in.nextLine();
+				if (this.state.length() != 2) {
+					System.out.println("Invalid argument. Try again.");
+				}
+			} while (this.state.length() != 2);
+			do {
+				System.out.println("Postal Code (#####): ");
+				try {
+					this.postalCode = in.nextInt();
+					in.nextLine();
+				}
+				catch (NumberFormatException e){
+					System.out.println("Invalid argument. Try again.");
+				}
+				
+				if ((int) Math.log10(this.postalCode) + 1 != 5){
+					System.out.println("Invalid argument. Try again.");
+				}
+			} while ((int) (Math.log10(this.postalCode) + 1) != 5);
+		}
 		
-	}
 	
 	public int getPin() {
 		return pin;

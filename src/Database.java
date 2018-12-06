@@ -87,4 +87,18 @@ public class Database {
 			}
 		}
 	}
+	
+	public long getMaxAccountNumber() {
+		long max = -1L;
+		
+		for (String account : accounts) {
+			long accountNumber = Long.parseLong(account.substring(0, 9));
+			
+			if (accountNumber > max) {
+				max = accountNumber;
+			}
+		}
+		
+		return max;
+	}
 }
