@@ -11,17 +11,13 @@
  */
 
 import java.io.*;
-import java.util.Scanner;
+import java.util.*;
 
 public class ATM {
 	private BankAccount account;
 	private Database database;
 	static Scanner in = new Scanner(System.in);
 	// input variable
-	
-	public ATM(BankAccount account) {
-		this.account = account;
-	}
 	
 	ATM(File file, Database database){
 		this.database = database;
@@ -38,65 +34,86 @@ public class ATM {
 	private void primaryMenu() {
 		
 		System.out.println("Welcome to the ATM.");
-		System.out.println("Press 1 to open an account.");
-		System.out.println("Press 2 to login.");
-		System.out.println("Press 3 to quit.");
+		System.out.println("[1] Open an account");
+		System.out.println("[2] Login");
+		System.out.println("[3] Quit");
 		// lists the options
-		boolean valid = true; 
+		int input = 0;
 		do {
-			int input = in.nextInt();
-			in.nextLine();
-			
-			switch(input) {
-				case 1:
-					account = new BankAccount(in);
-					valid = true;
-					break;
-				case 2:
-					loginMenu();
-					valid = true;
-					break;
-				case 3:
-					System.out.println("Your balance is $" + bank.balance + ".");
-					// displays current balance
-					valid = true;
-					break;
-				default:
-					System.out.println("You didn't enter a valid number! Try again.");
-					valid = false;
+			try {
+				input = in.nextInt();
+				
+				switch(input) {
+					case 1:
+						this.account = new BankAccount(in);
+						break;
+					case 2:
+						loginMenu();
+						break;
+					case 3:
+						break;
+					default:
+						System.out.println("You didn't enter a valid number. Try again.");
+				}
 			}
-		} while (!valid);
+			catch (InputMismatchException e) {
+				System.out.println("You didn't enter a valid number. Try again.");
+			}
+			finally {
+				in.nextLine();
+			}
+			
+		} while (input != 3);
 		
-		System.out.println("Do you want to do anything else? (Y/N)");
-		endDecider(in.next().toUpperCase().charAt(0));
 	}
-	public int loginMenu() {
-		System.out.println("Press 1 to deposit funds.");
-		System.out.println("Press 2 to withdraw funds.");
-		System.out.println("Press 3 to transfer funds.");
-		System.out.println("Press 4 to view your balance.");
-		System.out.println("Press 5 to view your personal information.");
-		System.out.println("Press 6 to update your personal information.");
-		System.out.println("Press 7 to close your account.");
-		System.out.println("Press 8 to logout.");
-		
-		return loginMenu();
+	public void loginMenu() {
+		System.out.println("What do you want to do?");
+		System.out.println("[1] Deposit funds\n"
+						 + "[2] Withdraw funds\n"
+		                 + "[3] Transfer funds\n"
+		                 + "[4] View your balance\n"
+		                 + "[5] View your personal information\n"
+		                 + "[6] Update your personal information\n"
+		                 + "[7] Close your account"
+		                 + "[8] Logout");
+		int input = 0;
+		do {
+			try {
+				input = in.nextInt();
+				
+				switch(input) {
+					case 1:
+						this.account.deposit(in);
+						break;
+					case 2:
+						this.account.withdraw(in);
+						break;
+					case 3:
+						break;
+					case 4:
+						break;
+					case 5:
+						break;
+					case 6:
+						break;
+					case 7:
+						break;
+					case 8:
+						break;
+					default:
+						System.out.println("You didn't enter a valid number. Try again.");
+				}
+			}
+			catch (InputMismatchException e) {
+				System.out.println("You didn't enter a valid number. Try again.");
+			}
+			finally {
+				in.nextLine();
+			}
+			
+		} while (input != 8);
 	}
 	
-	public int endDecider(char decision) {
-		
-		switch(decision) {
-			case 'Y':
-				primaryMenu();
-				return 1;
-			case 'N':
-				return 0;
-			default:
-				System.out.println("Invalid input!");
-		}
-		System.out.println("Do you want to do anything else? (Y/N)");
-		return endDecider(in.next().toUpperCase().charAt(0));
-	}
 	
 	/*public void deposit(double amount) {
 		bank.deposit(amount);
