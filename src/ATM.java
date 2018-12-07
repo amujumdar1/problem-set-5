@@ -19,9 +19,10 @@ public class ATM {
 	static Scanner in = new Scanner(System.in);
 	// input variable
 	
-	ATM(File file, Database database){
-		this.database = database;
-	}
+	ATM(String filename) throws FileNotFoundException, IOException{
+		this.database = new Database(filename);
+		new BankAccount(database);
+		}
 	
 	/*public static BankAccount setCredentials(){
 		User account = new User(34723283,
@@ -31,26 +32,30 @@ public class ATM {
 		return new BankAccount(1000, 713352114, account);
 	}*/
 	
-	private void primaryMenu() {
+	public void primaryMenu() throws IOException {
 		
 		System.out.println("Welcome to the ATM.");
-		System.out.println("[1] Open an account");
-		System.out.println("[2] Login");
-		System.out.println("[3] Quit");
 		// lists the options
 		int input = 0;
 		do {
+			System.out.println("[1] Open an account");
+			System.out.println("[2] Login");
+			System.out.println("[3] Quit");
 			try {
 				input = in.nextInt();
 				
 				switch(input) {
 					case 1:
+						System.out.println("Creating new account...");
 						this.account = new BankAccount(in);
+						database.updateAccount(account, null);
 						break;
 					case 2:
+						
 						loginMenu();
 						break;
 					case 3:
+						System.out.println("Quitting...");
 						break;
 					default:
 						System.out.println("You didn't enter a valid number. Try again.");
@@ -66,40 +71,50 @@ public class ATM {
 		} while (input != 3);
 		
 	}
-	public void loginMenu() {
+	public void loginMenu() throws IOException {
 		System.out.println("What do you want to do?");
-		System.out.println("[1] Deposit funds\n"
-						 + "[2] Withdraw funds\n"
-		                 + "[3] Transfer funds\n"
-		                 + "[4] View your balance\n"
-		                 + "[5] View your personal information\n"
-		                 + "[6] Update your personal information\n"
-		                 + "[7] Close your account"
-		                 + "[8] Logout");
 		int input = 0;
 		do {
+			System.out.println("[1] Deposit funds\n"
+					 + "[2] Withdraw funds\n"
+	                 + "[3] Transfer funds\n"
+	                 + "[4] View your balance\n"
+	                 + "[5] View your personal information\n"
+	                 + "[6] Update your personal information\n"
+	                 + "[7] Close your account"
+	                 + "[8] Logout");
 			try {
 				input = in.nextInt();
 				
 				switch(input) {
 					case 1:
 						this.account.deposit(in);
+						database.updateAccount(account, null);
 						break;
 					case 2:
 						this.account.withdraw(in);
+						database.updateAccount(account, null);
 						break;
 					case 3:
 						break;
 					case 4:
+						this.account.getBalance();
+						System.out.print("Your Current Balance: $" + this.account.getBalance());
 						break;
 					case 5:
+						this.account.getUser().showInfo();
 						break;
 					case 6:
+						this.account.getUser().updateInfo(in);
+						database.updateAccount(account, null);
 						break;
 					case 7:
+						System.out.println("Closing account.");
+						this.account.close();
 						break;
 					case 8:
-						break;
+						System.out.println("Logging out...");
+						this.account = null;
 					default:
 						System.out.println("You didn't enter a valid number. Try again.");
 				}

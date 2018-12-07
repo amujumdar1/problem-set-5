@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /**
  * This class has only one responsibility: start the ATM program!
  */
@@ -10,14 +13,18 @@ public class Tester {
 	 * @param args
 	 */
 	
-	public static void main(String[] args) throws NumberFormatException {
+	public static void main(String[] args) {
+		
 		try {
-			printWeirdString();
+			ATM atm = new ATM("accounts-db.txt");
+			atm.primaryMenu();	
+			} 
+		catch (FileNotFoundException e) {
+			System.out.println("Error: File not Found. Please find correct file and restart program.");
+		} catch (IOException e) {
+			System.out.println("I/O Error. Please restart program.");
 		}
-		catch (NumberFormatException e){
-			
-			System.out.println("Invalid!");
-		}
+		
 		
 		/*
 		 * Rather than hard coding one or more BankAccount objects, you'll need to read them in
@@ -26,18 +33,4 @@ public class Tester {
 		 */
 	}
 
-
-	public static void printWeirdString() throws NumberFormatException {
-		String x = "a";
-		
-		char toChar = toChar(x);
-		
-		System.out.println(toChar);
-	}
-
-
-	private static char toChar(String x) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

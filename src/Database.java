@@ -82,6 +82,7 @@ public class Database {
 		
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + File.separator + path))) {
 			for (String acct : accounts) {
+				acct = account.formatString();
 				bw.write(acct);
 				bw.newLine();
 			}

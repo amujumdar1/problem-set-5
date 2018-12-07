@@ -204,6 +204,19 @@ public class User {
 		this.postalCode = postalCode;
 	}
 	
+	public void showInfo() {
+		System.out.println("Your personal information is listed below.");
+		System.out.println("Name: " + getFirstName() + getLastName());
+		System.out.println("Date of Birth: " + getBirthDate());
+		
+		System.out.println("Phone Number: " + String.valueOf(getPhone()).substring(0, 3) + "-" +
+				String.valueOf(getPhone()).substring(3, 6) + 
+				"-" + String.valueOf(getPhone()).substring(6, 10));
+		
+		System.out.println("Address: " + getStreetAddress() + ", "
+				+ getCity() + ", " + getState() + " " + getPostalCode());
+	}
+	
 	public void updateInfo(Scanner in) {
 		System.out.println("What do you want to update?");
 		System.out.println("[1] PIN\n" +
