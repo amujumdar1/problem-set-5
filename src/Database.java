@@ -64,25 +64,24 @@ public class Database {
 		
 		for (int i = 0; i < accounts.length; i++) {			
 			if (accounts[i].startsWith(String.valueOf(account.getAccountNumber()))) {
-				accounts[i] = account.toString();
+				accounts[i] = account.formatString();
 				newAccount = false;
 			}
 			
 			if (destination != null) {
 				if (accounts[i].startsWith(String.valueOf(destination.getAccountNumber()))) {
-					accounts[i] = destination.toString();
+					accounts[i] = destination.formatString();
 				}
 			}
 		}
 		
 		if (newAccount) {
 			accounts = Arrays.copyOf(accounts, accounts.length + 1);
-			accounts[accounts.length - 1] = account.toString();
+			accounts[accounts.length - 1] = account.formatString();
 		}
 		
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + File.separator + path))) {
 			for (String acct : accounts) {
-				acct = account.formatString();
 				bw.write(acct);
 				bw.newLine();
 			}

@@ -39,11 +39,11 @@ public class User {
 	User (Scanner in) {
 		System.out.println("Please enter your information below.");
 			System.out.print("First name (first 15 characters - CANNOT CHANGE): ");
-			this.firstName = in.nextLine().substring(0, 16);
+			firstName = (in.nextLine() + "                ").substring(0, 15);
 			System.out.print("Last name (first 15 characters - CANNOT CHANGE): ");
-			this.lastName = in.nextLine().substring(0, 21);
+			lastName = (in.nextLine() + "                     ").substring(0, 20);
 			do {
-				System.out.println("PIN (####): ");
+				System.out.print("PIN (####): ");
 				try {
 					this.pin = in.nextInt();
 					if ((int) Math.log10(this.pin) + 1 != 4){
@@ -62,8 +62,8 @@ public class User {
 			do {
 				System.out.print("Birth date (YYYYMMDD - CANNOT CHANGE): ");
 				try {
-					this.birthDate = in.nextInt();
-					if ((int) Math.log10(this.Phone) + 1 != 8) {
+					birthDate = in.nextInt();
+					if ((int) Math.log10(birthDate) + 1 != 8) {
 						System.out.println("Invalid argument. Try again.");
 					}
 				}
@@ -73,48 +73,17 @@ public class User {
 				finally {
 					in.nextLine();
 				}
-			} while ((int) Math.log10(this.Phone) + 1  != 8);
+			} while ((int) Math.log10(birthDate) + 1  != 8);
 			
-			do {
-				System.out.println("Phone Number (##########): ");
-				try {
-					this.Phone = in.nextLong();
-					if ((int) Math.log10(this.Phone) + 1 != 10){
-						System.out.println("Invalid argument. Try again.");
-					}
-				}
-				catch (InputMismatchException e){
-					System.out.println("Invalid argument. Try again.");
-				}
-				finally {
-					in.nextLine();
-				}
-				
-			} while ((int) (Math.log10(this.Phone) + 1) != 10);
+			setPhone(in);
 			
-			System.out.print("Street address (first 30 characters): ");
+			setStreetAddress(in);
 			
-			this.streetAddress = in.nextLine().substring(0, 31);
+			setCity(in);
 			
-			System.out.print("City (first 30 characters): ");
+			setState(in);
 			
-			this.city= in.nextLine().substring(0, 31);
-			
-			do {
-				System.out.print("State (two characters; e.g: XY): ");
-				this.state = in.nextLine();
-				if (this.state.length() != 2) {
-					System.out.println("Invalid argument. Try again.");
-				}
-			} while (this.state.length() != 2);
-			
-			do {
-				System.out.println("Postal Code (#####): ");
-					this.postalCode = in.nextLine();
-					if (this.postalCode.length() != 5){
-						System.out.println("Invalid argument. Try again.");
-					}
-			} while (this.postalCode.length() != 5);
+			setPostalCode(in);
 		}
 		
 				
@@ -133,23 +102,28 @@ public class User {
 			if (pinTest == 0 && exitCounter > 0) return;
 			// so there is no infinite loop
 			
-			if (pinTest != this.pin) {
+			if (pinTest != pin) {
 				System.out.println("Incorrect PIN. Please try again. Or press 0 to exit.");
 			}
 			exitCounter++;
-		} while (pinTest != this.pin);
+		} while (pinTest != pin);
+		do {
+			System.out.println("Please enter your new PIN.");
+			this.pin = in.nextInt();
+			in.nextLine();
+			if ((int) Math.log10(this.pin) + 1 != 4) {
+				System.out.println("Please enter a 4 digit PIN.");
+			}
+		} while ((int) Math.log10(this.pin) + 1 != 4);
 		
-		System.out.println("Please enter your new PIN.");
-		this.pin = in.nextInt();
-		in.nextLine();
 	}
 	
 	public String getFirstName() {
 		return firstName;
 	}
 	
-	public void setFirstName(String lastName) {
-		this.firstName = lastName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 	
 	public String getLastName() {
@@ -172,66 +146,100 @@ public class User {
 		return Phone;
 	}
 	
-	public void setPhone(long Phone) {
-		this.Phone = Phone;
+	public void setPhone(Scanner in) {
+		do {
+			System.out.print("Enter your new Phone Number (##########): ");
+			try {
+				Phone = in.nextLong();
+				if ((int) Math.log10(Phone) + 1 != 10){
+					System.out.println("Invalid argument. Try again.");
+				}
+			}
+			catch (InputMismatchException e){
+				System.out.println("Invalid argument. Try again.");
+			}
+			finally {
+				in.nextLine();
+			}
+			
+		} while ((int) (Math.log10(Phone) + 1) != 10);
 	}
 	
 	public String getStreetAddress() {
 		return streetAddress;
 	}
 	
-	public void setStreetAddress(String streetAddress) {
-		this.streetAddress = streetAddress;
+	public void setStreetAddress(Scanner in) {
+		System.out.println("Please enter your new street address (first 30 characters).");
+		streetAddress = (in.nextLine() + "                              ").substring(0, 30);
 	}
 	
 	public String getCity() {
 		return city;
 	}
 	
-	public void setCity(String city) {
-		this.city = city;
+	public void setCity(Scanner in) {
+		System.out.print("Please enter your new city (first 30 characters): ");
+		
+		city= (in.nextLine() + "                                 ").substring(0, 30);
 	}
 	public String getState() {
 		return state;
 	}
-	public void setState(String state) {
-		this.state = state;
+	public void setState(Scanner in) {
+		state = null;
+		do {
+			System.out.print("Please enter your new state (two characters; e.g: XY): ");
+			state = in.nextLine();
+			if (state.length() != 2) {
+				System.out.println("Invalid argument. Try again.");
+			}
+		} while (state.length() != 2);
 	}
 	public String getPostalCode() {
 		return postalCode;
 	}
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
+	public void setPostalCode(Scanner in) {
+		do {
+			System.out.println("Please enter your new Postal Code (5 characters): ");
+				postalCode = in.nextLine();
+				if (this.postalCode.length() != 5){
+					System.out.println("Invalid argument. Try again.");
+				}
+		} while (postalCode.length() != 5);
 	}
 	
 	public void showInfo() {
 		System.out.println("Your personal information is listed below.");
-		System.out.println("Name: " + getFirstName() + getLastName());
+		System.out.println("Name: " + getFirstName().replaceFirst("\\s++$", "") + " " + getLastName().replaceFirst("\\s++$", ""));
+		
 		System.out.println("Date of Birth: " + getBirthDate());
 		
-		System.out.println("Phone Number: " + String.valueOf(getPhone()).substring(0, 3) + "-" +
-				String.valueOf(getPhone()).substring(3, 6) + 
-				"-" + String.valueOf(getPhone()).substring(6, 10));
+		System.out.println("Phone Number: " + getPhone());
 		
-		System.out.println("Address: " + getStreetAddress() + ", "
-				+ getCity() + ", " + getState() + " " + getPostalCode());
+		System.out.println("Address: " + getStreetAddress().replaceFirst("\\s++$", "") + ", "
+				+ getCity().replaceFirst("\\s++$", "") + ", " + getState().replaceFirst("\\s++$", "")
+				+ " " + getPostalCode());
 	}
 	
 	public void updateInfo(Scanner in) {
 		System.out.println("What do you want to update?");
-		System.out.println("[1] PIN\n" +
-						   "[2] Phone Number\n" + 
-				           "[3] Address"+
-				           "[4] Nothing; get me out of here.");
-		int input = 0;
+		int updateInput = 0;
 		do {
+			System.out.println("[1] PIN\n" +
+					   "[2] Phone Number\n" + 
+			           "[3] Address\n"+
+			           "[4] Nothing; get me out of here.");
 			try {
-				input = in.nextInt();
+				updateInput = in.nextInt();
+				in.nextLine();
 				
-				switch(input) {
+				switch(updateInput) {
 					case 1:
 						try {
 							setPin(in);
+							System.out.println("Successfully updated PIN. Your new"
+									+ "PIN is now " + getPin() + ".");
 						}
 						catch (InputMismatchException e) {
 							System.out.println("Invalid input.");
@@ -239,39 +247,27 @@ public class User {
 						finally {
 							in.nextLine();
 						}
+						System.out.println("Press [ENTER]");
 						break;
 					case 2:
+						setPhone(in);
+						System.out.println("Successfully updated your phone number. Your "
+								+ "new phone number is now " + getPhone() + ".");
+						System.out.println("Press [ENTER]");
 						break;
 					case 3:
-						System.out.println("Please enter your new street address (first 30 characters).");
-						String newStreetAddress = in.nextLine().substring(0, 31);
+						setStreetAddress(in);
+						setCity(in);
+						setState(in);
+						setPostalCode(in);
 						
-						System.out.println("Please enter your new city.");
-						String newCity = in.nextLine().substring(0, 31);
-						
-						String newState = null, newPostalCode = null;
-						do {
-							System.out.print("Please enter your new state (two characters; e.g: XY): ");
-							newState = in.nextLine();
-							if (newState.length() != 2) {
-								System.out.println("Invalid argument. Try again.");
-							}
-						} while (newState.length() != 2);
-						do {
-							System.out.println("Please enter your new Postal Code (5 characters): ");
-								newPostalCode = in.nextLine();
-								if (this.postalCode.length() != 5){
-									System.out.println("Invalid argument. Try again.");
-								}
-						} while (newPostalCode.length() != 5);
-						setStreetAddress(newStreetAddress);
-						setCity(newCity);
-						setState(newState);
-						setPostalCode(newPostalCode);
-						
+						System.out.println("Your new address is " + getStreetAddress().replaceFirst("\\s++$", "") + ", "
+								+ getCity().replaceFirst("\\s++$", "") + ", " + getState().replaceFirst("\\s++$", "")
+								+ " " + getPostalCode() + ".");
+						System.out.println("Press [ENTER]");
 						break;
 					case 4:
-						System.out.println("Exiting Update Menu.");
+						System.out.println("Exiting Update Menu. Press [ENTER] twice");
 						break;
 					default:
 						System.out.println("Please enter a valid number.");
@@ -283,6 +279,6 @@ public class User {
 			finally {
 				in.nextLine();
 			}
-		} while (input != 4);
+		} while (updateInput != 4);
 	}
 }

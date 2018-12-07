@@ -8,6 +8,7 @@
  * for inspiration (https://github.com/rwilson-ucvts/java-sample-atm).
  */
 
+import java.security.InvalidParameterException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -24,6 +25,7 @@ public class BankAccount {
 	}
 	
 	public BankAccount(String text){
+		// parses the entire line and adds arguments from it
 			try {
 				int position = 0;
 				
@@ -61,6 +63,7 @@ public class BankAccount {
 			
 	}
 	public BankAccount(Scanner in) {
+	// this is to create a new account, combining the new account number
 		this.account = new User(in);
 		this.accountNumber = tempAccountNumber++;
 	}
@@ -71,8 +74,8 @@ public class BankAccount {
 		double amount = 0;
 		try {
 			amount = in.nextDouble();
-			if (amount < 0) {
-				System.out.println("Please enter a non-negative amount.");
+			if (amount <= 0) {
+				System.out.println("Please enter a positive amount.");
 				return;
 			}
 			else if (Double.toString(balance + amount).length() > 15) {
@@ -84,7 +87,7 @@ public class BankAccount {
 					+ "Your new balance is: $%.2f.\n\n", amount, getBalance());
 		}
 		catch (InputMismatchException e){
-			System.out.println("Please enter a valid amount.");
+			System.out.println("Please enter a valid amount. (No $ signs)");
 		}
 		finally {
 			in.nextLine();
@@ -103,8 +106,8 @@ public class BankAccount {
 				System.out.println("Withdaw amount exceeds balance.");	
 				return;
 			}
-			else if (amount < 0) {
-				System.out.println("Please enter a non-negative amount.");
+			else if (amount <= 0) {
+				System.out.println("Please enter a positive amount.");
 				return;
 			}
 			balance -= amount;
@@ -112,7 +115,7 @@ public class BankAccount {
 					+ "Your new balance is $%.2f\n\n", amount, getBalance());
 		}
 		catch (InputMismatchException e){
-			System.out.println("Invalid input!");
+			System.out.println("Please enter a valid amount. (No $ signs)");
 		}
 		finally {
 			in.nextLine();
@@ -145,6 +148,27 @@ public class BankAccount {
 	
 	public void close() {
 		this.setAccountStatus('N');
+	}
+	
+	public void transfer(BankAccount receiver, Scanner in) throws InputMismatchException{
+		in.nextLine();
+		double amount = 0;
+		if (receiver == null) {
+			throw new InvalidParameterException("Receiving account does not exist.");
+		}
+		System.out.println("How much money would you like to transfer?");
+		amount = in.nextDouble();
+		in.nextLine();
+		if (amount > this.balance) {
+			throw new InvalidParameterException("Amount exceeds current balance.");
+		}
+		else if (amount <= 0) {
+			throw new InvalidParameterException("Please enter a positive amount.");
+		}
+		this.balance -= amount;
+		receiver.balance += amount;
+		System.out.printf("You successfully transferred $%.2f.\n"
+				+ "Your new balance is $%.2f\n\n", amount, getBalance());
 	}
 	public String formatString() {
 		String first = String.format("%-9s", this.accountNumber);

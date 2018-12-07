@@ -11,6 +11,7 @@
  */
 
 import java.io.*;
+import java.security.InvalidParameterException;
 import java.util.*;
 
 public class ATM {
@@ -43,16 +44,19 @@ public class ATM {
 			System.out.println("[3] Quit");
 			try {
 				input = in.nextInt();
+				in.nextLine();
 				
 				switch(input) {
 					case 1:
 						System.out.println("Creating new account...");
 						this.account = new BankAccount(in);
 						database.updateAccount(account, null);
+						System.out.println("Successfully created a new account.");
+						mainMenu();
 						break;
 					case 2:
-						
-						loginMenu();
+						// TODO - create login method
+						mainMenu();
 						break;
 					case 3:
 						System.out.println("Quitting...");
@@ -71,9 +75,9 @@ public class ATM {
 		} while (input != 3);
 		
 	}
-	public void loginMenu() throws IOException {
+	public void mainMenu() throws IOException {
 		System.out.println("What do you want to do?");
-		int input = 0;
+		int mainInput = 0;
 		do {
 			System.out.println("[1] Deposit funds\n"
 					 + "[2] Withdraw funds\n"
@@ -81,28 +85,52 @@ public class ATM {
 	                 + "[4] View your balance\n"
 	                 + "[5] View your personal information\n"
 	                 + "[6] Update your personal information\n"
-	                 + "[7] Close your account"
+	                 + "[7] Close your account\n"
 	                 + "[8] Logout");
 			try {
-				input = in.nextInt();
+				mainInput = in.nextInt();
+				in.nextLine();
 				
-				switch(input) {
+				switch(mainInput) {
 					case 1:
 						this.account.deposit(in);
 						database.updateAccount(account, null);
+						System.out.println("Press [ENTER]");
 						break;
 					case 2:
 						this.account.withdraw(in);
 						database.updateAccount(account, null);
+						System.out.println("Press [ENTER]");
 						break;
 					case 3:
+						// TODO - create transfer method
+						System.out.println("Please enter the recepient's account number.");
+						try {
+							BankAccount receiver = database.getAccount(in.nextLong());
+							in.nextLine();
+							this.account.transfer(receiver, in);
+							database.updateAccount(this.account, receiver);
+							in.nextLine();
+						}
+						catch (InvalidParameterException e) {
+							e.getMessage();
+						}
+						catch (InputMismatchException e) {
+							System.out.println("Please enter a valid amount.");
+						}
+						finally {
+							in.nextLine();
+						}
+						System.out.println("Press [ENTER]");
 						break;
 					case 4:
 						this.account.getBalance();
-						System.out.print("Your Current Balance: $" + this.account.getBalance());
+						System.out.println("Your Current Balance: $" + this.account.getBalance());
+						System.out.println("Press [ENTER]");
 						break;
 					case 5:
 						this.account.getUser().showInfo();
+						System.out.println("Press [ENTER]");
 						break;
 					case 6:
 						this.account.getUser().updateInfo(in);
@@ -115,6 +143,7 @@ public class ATM {
 					case 8:
 						System.out.println("Logging out...");
 						this.account = null;
+						break;
 					default:
 						System.out.println("You didn't enter a valid number. Try again.");
 				}
@@ -126,19 +155,7 @@ public class ATM {
 				in.nextLine();
 			}
 			
-		} while (input != 8);
+		} while (mainInput != 8);
 	}
 	
-	
-	/*public void deposit(double amount) {
-		bank.deposit(amount);
-	}
-	
-	public void withdraw(double amount) {
-		bank.withdraw(amount);
-	}
-	
-	public double showBalance() {
-		return bank.balance;
-	}*/
 }
