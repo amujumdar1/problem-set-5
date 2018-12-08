@@ -98,7 +98,6 @@ public class Database {
 				max = accountNumber;
 			}
 		}
-		
 		return max;
 	}
 }

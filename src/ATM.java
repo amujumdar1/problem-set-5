@@ -17,12 +17,11 @@ import java.util.*;
 public class ATM {
 	private BankAccount account;
 	private Database database;
-	static Scanner in = new Scanner(System.in);
+	private static Scanner in = new Scanner(System.in);
 	// input variable
 	
 	ATM(String filename) throws FileNotFoundException, IOException{
 		this.database = new Database(filename);
-		new BankAccount(database);
 		}
 	
 	/*public static BankAccount setCredentials(){
@@ -49,14 +48,23 @@ public class ATM {
 				switch(input) {
 					case 1:
 						System.out.println("Creating new account...");
-						this.account = new BankAccount(in);
+						this.account = new BankAccount(in, database);
 						database.updateAccount(account, null);
 						System.out.println("Successfully created a new account.");
+						System.out.println("Your Account Number is: " + this.account.getAccountNumber());
 						mainMenu();
 						break;
 					case 2:
-						// TODO - create login method
-						mainMenu();
+						try {
+							login();
+							mainMenu();
+						}
+						catch (InvalidParameterException e) {
+							e.getMessage();
+						}
+						finally {
+							in.nextLine();
+						}
 						break;
 					case 3:
 						System.out.println("Quitting...");
@@ -115,9 +123,9 @@ public class ATM {
 						catch (InvalidParameterException e) {
 							e.getMessage();
 						}
-						catch (InputMismatchException e) {
+						/*catch (InputMismatchException e) {
 							System.out.println("Please enter a valid amount.");
-						}
+						}*/
 						finally {
 							in.nextLine();
 						}
@@ -129,6 +137,8 @@ public class ATM {
 						System.out.println("Press [ENTER]");
 						break;
 					case 5:
+						System.out.println("Your personal information is listed below.");
+						System.out.println("Account Number: " + this.account.getAccountNumber());
 						this.account.getUser().showInfo();
 						System.out.println("Press [ENTER]");
 						break;
@@ -139,10 +149,12 @@ public class ATM {
 					case 7:
 						System.out.println("Closing account.");
 						this.account.close();
+						
 						break;
 					case 8:
 						System.out.println("Logging out...");
 						this.account = null;
+						System.out.println("Press [ENTER] three times.");
 						break;
 					default:
 						System.out.println("You didn't enter a valid number. Try again.");
@@ -158,4 +170,18 @@ public class ATM {
 		} while (mainInput != 8);
 	}
 	
+	public void login() throws InputMismatchException {
+		System.out.println("Please enter your Account Number.");
+		this.account = database.getAccount(in.nextLong());
+		in.nextLine();
+		if (this.account == null) {
+			throw new InvalidParameterException("Account does not exist.");
+		}
+		System.out.println("Please enter your PIN.");
+		int pinTest = in.nextInt();
+		if (pinTest != account.getUser().getPin()) {
+			throw new InvalidParameterException("Incorrect PIN.");
+		}
+		System.out.println("Successfully logged in.");
+	}
 }

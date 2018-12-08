@@ -18,7 +18,7 @@ public class Tester {
 		try {
 			ATM atm = new ATM("accounts-db.txt");
 			atm.primaryMenu();	
-			} 
+		} 
 		catch (FileNotFoundException e) {
 			System.out.println("Error: File not Found. Please find correct file and restart program.");
 		} catch (IOException e) {

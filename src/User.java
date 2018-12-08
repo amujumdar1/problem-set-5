@@ -170,7 +170,7 @@ public class User {
 	}
 	
 	public void setStreetAddress(Scanner in) {
-		System.out.println("Please enter your new street address (first 30 characters).");
+		System.out.print("Please enter your new street address (first 30 characters):");
 		streetAddress = (in.nextLine() + "                              ").substring(0, 30);
 	}
 	
@@ -201,7 +201,7 @@ public class User {
 	}
 	public void setPostalCode(Scanner in) {
 		do {
-			System.out.println("Please enter your new Postal Code (5 characters): ");
+			System.out.print("Please enter your new Postal Code (5 characters): ");
 				postalCode = in.nextLine();
 				if (this.postalCode.length() != 5){
 					System.out.println("Invalid argument. Try again.");
@@ -210,7 +210,6 @@ public class User {
 	}
 	
 	public void showInfo() {
-		System.out.println("Your personal information is listed below.");
 		System.out.println("Name: " + getFirstName().replaceFirst("\\s++$", "") + " " + getLastName().replaceFirst("\\s++$", ""));
 		
 		System.out.println("Date of Birth: " + getBirthDate());
@@ -239,7 +238,9 @@ public class User {
 						try {
 							setPin(in);
 							System.out.println("Successfully updated PIN. Your new"
-									+ "PIN is now " + getPin() + ".");
+									+ " PIN is now " + getPin() + ".");
+
+							System.out.println("Press [ENTER] twice.");
 						}
 						catch (InputMismatchException e) {
 							System.out.println("Invalid input.");
@@ -247,7 +248,6 @@ public class User {
 						finally {
 							in.nextLine();
 						}
-						System.out.println("Press [ENTER]");
 						break;
 					case 2:
 						setPhone(in);

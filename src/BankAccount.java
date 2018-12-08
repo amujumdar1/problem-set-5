@@ -14,31 +14,25 @@ import java.util.Scanner;
 
 public class BankAccount {
 	private long accountNumber;
-	private long tempAccountNumber;
+	public long tempAccountNumber;
 	private User account;
-	Database database;
 	private char accountStatus = 'Y';
-	double balance;
-	
-	public BankAccount(Database database) {
-		tempAccountNumber = database.getMaxAccountNumber() + 1;
-	}
+	private double balance = 0;
 	
 	public BankAccount(String text){
 		// parses the entire line and adds arguments from it
-			try {
+			//try {
 				int position = 0;
 				
-				accountNumber = Long.parseLong(text.substring(position, position += 9));
-				
+				this.accountNumber = Long.parseLong(text.substring(position, position += 9));
+
 				int pin = Integer.parseInt(text.substring(position, position += 4));
 				
-				balance = Integer.parseInt(text.substring(position, position += 15));
+				this.balance = Double.parseDouble(text.substring(position, position += 15));
 				
 				String lastName = text.substring(position, position += 20);
-				position += 2;
 				
-				String firstName = text.substring(position, position += 10);
+				String firstName = text.substring(position, position += 15);
 				
 				int birthDate = Integer.parseInt(text.substring(position, position += 8));
 				
@@ -55,17 +49,17 @@ public class BankAccount {
 				this.setAccountStatus(text.charAt(position));
 				
 				this.account = new User (pin, firstName, lastName, Phone, streetAddress, birthDate, city, state, postalCode);
-			}
-			catch (NumberFormatException e) {
+			//}
+			/*catch (NumberFormatException e) {
 				System.out.println("Error reading data. Data types are invalid.");
 				// this will never happen but good JUST in case the preloaded file had errors.
-			}
+			}*/
 			
 	}
-	public BankAccount(Scanner in) {
+	public BankAccount(Scanner in, Database database) {
 	// this is to create a new account, combining the new account number
 		this.account = new User(in);
-		this.accountNumber = tempAccountNumber++;
+		this.accountNumber = database.getMaxAccountNumber() + 1;
 	}
 	
 	public void deposit (Scanner in) {
