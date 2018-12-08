@@ -16,12 +16,12 @@ public class BankAccount {
 	private long accountNumber;
 	public long tempAccountNumber;
 	private User account;
-	private char accountStatus = 'Y';
+	private char accountStatus;
 	private double balance = 0;
 	
 	public BankAccount(String text){
 		// parses the entire line and adds arguments from it
-			//try {
+			try {
 				int position = 0;
 				
 				this.accountNumber = Long.parseLong(text.substring(position, position += 9));
@@ -49,11 +49,11 @@ public class BankAccount {
 				this.setAccountStatus(text.charAt(position));
 				
 				this.account = new User (pin, firstName, lastName, Phone, streetAddress, birthDate, city, state, postalCode);
-			//}
-			/*catch (NumberFormatException e) {
+			}
+			catch (NumberFormatException e) {
 				System.out.println("Error reading data. Data types are invalid.");
 				// this will never happen but good JUST in case the preloaded file had errors.
-			}*/
+			}
 			
 	}
 	public BankAccount(Scanner in, Database database) {
@@ -97,7 +97,7 @@ public class BankAccount {
 		try {
 			amount = in.nextDouble();
 			if (amount > balance) {
-				System.out.println("Withdaw amount exceeds balance.");	
+				System.out.println("Withdraw amount exceeds balance.");	
 				return;
 			}
 			else if (amount <= 0) {
@@ -176,7 +176,7 @@ public class BankAccount {
 		String ninth = String.format("%-30s", account.getCity());
 		String tenth = String.format("%-2s", account.getState());
 		String eleventh = String.format("%-5s", account.getPostalCode());
-		String twelveth = "Y";
+		String twelveth = this.accountStatus + "";
 		return (first + second + third + fourth + fifth + sixth + seventh + eighth + ninth
 				+ tenth + eleventh + twelveth);
 	}

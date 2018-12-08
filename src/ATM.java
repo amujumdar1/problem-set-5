@@ -60,7 +60,11 @@ public class ATM {
 							mainMenu();
 						}
 						catch (InvalidParameterException e) {
-							e.getMessage();
+							System.out.println(e.getMessage());
+							System.out.println("Press [ENTER] twice.");
+						}
+						catch(InputMismatchException e) {
+							System.out.println("You didn't enter a valid number. Press [ENTER]");
 						}
 						finally {
 							in.nextLine();
@@ -147,9 +151,10 @@ public class ATM {
 						database.updateAccount(account, null);
 						break;
 					case 7:
-						System.out.println("Closing account.");
+						System.out.println("Closing account. Thank you for using this ATM.");
 						this.account.close();
-						
+						this.account = null;
+						database.updateAccount(account, null);
 						break;
 					case 8:
 						System.out.println("Logging out...");
@@ -167,7 +172,7 @@ public class ATM {
 				in.nextLine();
 			}
 			
-		} while (mainInput != 8);
+		} while (mainInput != 8 || mainInput != 7);
 	}
 	
 	public void login() throws InputMismatchException {
