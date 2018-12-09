@@ -24,7 +24,7 @@ public class Tester {
 		} catch (IOException e) {
 			System.out.println("I/O Error. Please restart program.");
 		}
-		
+		// both are possible errors
 		
 		/*
 		 * Rather than hard coding one or more BankAccount objects, you'll need to read them in

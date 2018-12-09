@@ -17,11 +17,6 @@ public class Database {
 		this.accounts = getAllAccounts();
 	}
 	
-	/*void createAccount(BankAccount account) throws IOException {
-		try (BufferedWriter br = new BufferedWriter(new FileWriter(this.file))){
-			// TODO 
-		}
-	}*/
 	public String[] getAllAccounts() throws FileNotFoundException, IOException {
 		int count = 0;
 		String[] accounts = new String[10];
@@ -51,13 +46,6 @@ public class Database {
 		
 		return null;
 	}
-	/*try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-		String line;
-		
-		while ((line = br.readLine()) != null) {
-			
-		}
-	}*/
 	
 	public void updateAccount(BankAccount account, BankAccount destination) throws IOException {
 		boolean newAccount = true;
@@ -65,6 +53,7 @@ public class Database {
 		for (int i = 0; i < accounts.length; i++) {			
 			if (accounts[i].startsWith(String.valueOf(account.getAccountNumber()))) {
 				accounts[i] = account.formatString();
+				// inputs line that is formatted
 				newAccount = false;
 			}
 			

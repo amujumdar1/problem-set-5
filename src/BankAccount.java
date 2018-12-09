@@ -165,6 +165,7 @@ public class BankAccount {
 				+ "Your new balance is $%.2f\n\n", amount, getBalance());
 	}
 	public String formatString() {
+		// returns all information in a line format
 		String first = String.format("%-9s", this.accountNumber);
 		String second = String.format("%-4d", account.getPin());
 		String third = String.format("%-15f",this.balance);

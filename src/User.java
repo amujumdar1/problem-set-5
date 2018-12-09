@@ -37,6 +37,7 @@ public class User {
 	}
 	
 	User (Scanner in) {
+		// initializes all of user data
 		System.out.println("Please enter your information below.");
 			System.out.print("First name (first 15 characters - CANNOT CHANGE): ");
 			firstName = (in.nextLine() + "                ").substring(0, 15);

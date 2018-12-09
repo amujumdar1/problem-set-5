@@ -22,6 +22,7 @@ public class ATM {
 	
 	ATM(String filename) throws FileNotFoundException, IOException{
 		this.database = new Database(filename);
+		// constructor for database object
 		}
 	
 	/*public static BankAccount setCredentials(){
@@ -49,10 +50,14 @@ public class ATM {
 					case 1:
 						System.out.println("Creating new account...");
 						this.account = new BankAccount(in, database);
+						// initializes new account from scanner constructor
+						
 						database.updateAccount(account, null);
 						System.out.println("Successfully created a new account.");
 						System.out.println("Your Account Number is: " + this.account.getAccountNumber());
+						
 						mainMenu();
+						// redirects to main menu method
 						break;
 					case 2:
 						try {
@@ -115,7 +120,6 @@ public class ATM {
 						System.out.println("Press [ENTER]");
 						break;
 					case 3:
-						// TODO - create transfer method
 						System.out.println("Please enter the recepient's account number.");
 						try {
 							BankAccount receiver = database.getAccount(in.nextLong());
@@ -125,11 +129,8 @@ public class ATM {
 							in.nextLine();
 						}
 						catch (InvalidParameterException e) {
-							e.getMessage();
+							System.out.println(e.getMessage());
 						}
-						/*catch (InputMismatchException e) {
-							System.out.println("Please enter a valid amount.");
-						}*/
 						finally {
 							in.nextLine();
 						}
@@ -173,6 +174,7 @@ public class ATM {
 			}
 			
 		} while (mainInput != 8 || mainInput != 7);
+		// close account or log out
 	}
 	
 	public void login() throws InputMismatchException {
